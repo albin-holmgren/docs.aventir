@@ -1,0 +1,320 @@
+---
+title: "Installation"
+description: "Install and self-host Aventir on your own infrastructure"
+---
+
+# Installation Guide
+
+This guide covers self-hosting Aventir on your own infrastructure. For managed hosting, simply use [app.aventir.io](https://app.aventir.io).
+
+## Prerequisites
+
+### Required Accounts
+
+- **Supabase**: Database, Auth, and Realtime services
+- **Anthropic**: Claude API access for AI features
+- **DigitalOcean**: Virtual machine provisioning
+- **Vercel**: Web application hosting (optional, can use other hosts)
+- **Stripe**: Payment processing (optional, for billing)
+
+### System Requirements
+
+- Node.js 18+ and npm/yarn
+- Git for version control
+- A domain name (for production deployment)
+- SSL certificate (Let's Encrypt recommended)
+
+## Step 1: Clone the Repository
+
+```bash
+git clone https://github.com/aventir/aventir.git
+cd aventir
+```
+
+## Step 2: Install Dependencies
+
+```bash
+npm install
+```
+
+This installs dependencies for all workspace packages including:
+- Web application (Next.js)
+- Mobile application (Expo)
+- VM Server
+- Integration Runtime
+- API Client
+
+## Step 3: Configure Environment Variables
+
+Copy the example environment file:
+
+```bash
+cp env.example .env.local
+```
+
+### Required Variables
+
+```bash
+# Supabase
+NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your_anon_key
+SUPABASE_SERVICE_ROLE_KEY=your_service_role_key
+
+# Anthropic (Claude API)
+ANTHROPIC_API_KEY=sk-ant-api03-...
+
+# DigitalOcean (VM Provisioning)
+DIGITALOCEAN_API_TOKEN=dop_v1_...
+
+# Application
+NEXT_PUBLIC_APP_URL=http://localhost:3000
+```
+
+### Optional Variables
+
+```bash
+# Stripe (Billing)
+STRIPE_SECRET_KEY=sk_test_...
+STRIPE_WEBHOOK_SECRET=whsec_...
+NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_test_...
+STRIPE_PRICE_STARTER_MONTHLY=price_...
+
+# Integration Providers
+SLACK_CLIENT_ID=...
+SLACK_CLIENT_SECRET=...
+GMAIL_CLIENT_ID=...
+GMAIL_CLIENT_SECRET=...
+```
+
+## Step 4: Set Up the Database
+
+### Create Supabase Project
+
+1. Create a new project at [supabase.com](https://supabase.com)
+2. Note your project URL and API keys
+3. Enable the **uuid-ossp** extension in the Database → Extensions section
+
+### Run Migrations
+
+Execute the migration files in order:
+
+```bash
+# Using Supabase CLI
+supabase db execute --file supabase/migrations/001_initial_schema.sql
+supabase db execute --file supabase/migrations/002_add_ai_name.sql
+# ... continue for all migrations
+```
+
+Or use the SQL Editor in the Supabase dashboard:
+
+1. Navigate to SQL Editor
+2. Run each migration file in sequence
+3. Ensure migrations complete without errors
+
+### Verify Database Setup
+
+Check that these tables exist:
+
+- `profiles` - User profiles
+- `conversations` - Chat conversations
+- `messages` - Chat messages
+- `agents` - Agent configurations
+- `tasks` - Task records
+- `credentials` - Encrypted credentials
+
+## Step 5: Configure Authentication
+
+### Supabase Auth Settings
+
+1. Go to Authentication → Settings in Supabase
+2. Enable Email provider
+3. Configure email templates for confirmation and password reset
+4. Set Site URL to your application URL
+
+### OAuth Providers (Optional)
+
+To enable Google OAuth:
+
+1. Go to Authentication → Providers
+2. Enable Google provider
+3. Add your Google Client ID and Secret
+4. Configure authorized redirect URLs
+
+## Step 6: Deploy VM Server
+
+The VM Server manages virtual machines for agent execution.
+
+### Deploy to DigitalOcean App Platform
+
+```bash
+cd apps/vm-server
+# Follow DigitalOcean deployment instructions
+doctl apps create --spec app-spec.yaml
+```
+
+### Or Deploy to VPS
+
+```bash
+cd apps/vm-server
+npm install
+npm run build
+npm start
+```
+
+### Environment Variables for VM Server
+
+```bash
+VM_SERVER_PORT=8080
+VM_ENCRYPTION_KEY=your_32_char_key
+DIGITALOCEAN_API_TOKEN=your_token
+```
+
+## Step 7: Deploy Integration Runtime
+
+The Integration Runtime handles third-party service connections.
+
+```bash
+cd apps/integration-runtime
+npm install
+npm run build
+npm start
+```
+
+### Integration Runtime Environment
+
+```bash
+INTEGRATION_RUNTIME_PORT=8081
+SUPABASE_URL=...
+SUPABASE_SERVICE_ROLE_KEY=...
+ENCRYPTION_KEY=...
+```
+
+## Step 8: Deploy Web Application
+
+### Deploy to Vercel (Recommended)
+
+```bash
+npm i -g vercel
+vercel
+```
+
+Configure environment variables in the Vercel dashboard:
+
+1. Go to Project Settings → Environment Variables
+2. Add all variables from `.env.local`
+3. Redeploy the application
+
+### Or Self-Host
+
+```bash
+cd apps/web
+npm install
+npm run build
+npm start
+```
+
+## Step 9: Verify Installation
+
+### Check Web Application
+
+1. Visit your deployed URL
+2. Sign up for a new account
+3. Verify email confirmation works
+4. Start a conversation with the AI Manager
+
+### Test Agent Deployment
+
+1. Create a simple agent (e.g., "Check the weather")
+2. Verify VM provisioning works
+3. Confirm agent completes the task
+4. Check logs for any errors
+
+### Test Integrations
+
+1. Add a test credential (e.g., Gmail OAuth)
+2. Create an agent that uses the integration
+3. Verify the agent can access the service
+
+## Production Considerations
+
+### Security
+
+- Enable Row Level Security (RLS) on all tables (already configured in migrations)
+- Use strong encryption keys (32+ characters)
+- Enable 2FA for Supabase and DigitalOcean accounts
+- Regularly rotate API keys
+
+### Performance
+
+- Enable Supabase connection pooling
+- Configure CDN for static assets
+- Use DigitalOcean monitoring for VMs
+- Set up log aggregation
+
+### Monitoring
+
+- Configure health check endpoints
+- Set up alerts for failed agent runs
+- Monitor credit consumption
+- Track API rate limits
+
+## Updating Aventir
+
+To update to a new version:
+
+```bash
+# Pull latest changes
+git pull origin main
+
+# Install new dependencies
+npm install
+
+# Run new migrations
+supabase db execute --file supabase/migrations/NEW_MIGRATION.sql
+
+# Redeploy applications
+vercel --prod
+```
+
+## Troubleshooting
+
+### Database Connection Errors
+
+- Verify Supabase URL and keys are correct
+- Check RLS policies are properly configured
+- Ensure database extensions are enabled
+
+### Agent VMs Not Starting
+
+- Verify DigitalOcean API token
+- Check VM Server logs for errors
+- Ensure sufficient DigitalOcean account balance
+
+### Claude API Errors
+
+- Verify Anthropic API key is valid
+- Check rate limits on your Anthropic account
+- Monitor API usage in Anthropic dashboard
+
+### Integration Failures
+
+- Verify OAuth apps are properly configured
+- Check redirect URLs match your deployment
+- Ensure credentials are not expired
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Architecture Overview" icon="cpu" href="/architecture/overview">
+    Understand how Aventir components work together.
+  </Card>
+  <Card title="API Reference" icon="code" href="/api-reference/introduction">
+    Integrate with the Aventir REST API.
+  </Card>
+  <Card title="Security Guide" icon="shield" href="/architecture/security">
+    Learn about Aventir's security architecture.
+  </Card>
+  <Card title="Contributing" icon="github" href="/contributing">
+    Contribute to the Aventir open source project.
+  </Card>
+</CardGroup>

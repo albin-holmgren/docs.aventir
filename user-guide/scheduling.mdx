@@ -1,0 +1,444 @@
+---
+title: "Scheduling"
+description: "Configure when and how often agents run"
+---
+
+# Scheduling
+
+Scheduling allows agents to run automatically at specified times, creating true set-and-forget automation.
+
+## Schedule Types
+
+### One-Time
+
+Execute once at a specific time:
+
+```
+"Run tomorrow at 3 PM"
+"Start in 2 hours"
+"Execute on January 20th at 9 AM"
+```
+
+### Recurring
+
+Run on a repeating schedule:
+
+```
+"Every day at 9 AM"
+"Every Monday at 8 AM"
+"Every hour during business hours"
+```
+
+### Triggered
+
+Execute in response to events:
+
+```
+"When a new order arrives in Shopify"
+"When I receive an email from boss@company.com"
+"When a GitHub issue is labeled 'urgent'"
+```
+
+## Cron Expressions
+
+Schedules use standard cron format:
+
+```
+* * * * *
+│ │ │ │ │
+│ │ │ │ └─ Day of week (0-7, 0=Sunday)
+│ │ │ └─── Month (1-12)
+│ │ └───── Day of month (1-31)
+│ └─────── Hour (0-23)
+└───────── Minute (0-59)
+```
+
+### Common Schedules
+
+| Schedule | Cron Expression | Description |
+|----------|-----------------|-------------|
+| Every minute | `* * * * *` | High-frequency monitoring |
+| Every 5 minutes | `*/5 * * * *` | Regular checks |
+| Every hour | `0 * * * *` | Hourly updates |
+| Every 2 hours | `0 */2 * * *` | Bi-hourly tasks |
+| Daily 9 AM | `0 9 * * *` | Morning reports |
+| Daily 5 PM | `0 17 * * *` | End-of-day summaries |
+| Weekdays 9 AM | `0 9 * * 1-5` | Business days only |
+| Weekly Monday 8 AM | `0 8 * * 1` | Weekly planning |
+| Weekly Friday 5 PM | `0 17 * * 5` | Weekly wrap-up |
+| Monthly 1st 9 AM | `0 9 1 * *` | Monthly reports |
+
+### Advanced Examples
+
+```
+# Every 30 minutes during business hours (9-5)
+*/30 9-17 * * 1-5
+
+# Every hour on weekdays, every 4 hours on weekends
+0 9-17 * * 1-5
+0 */4 * * 0,6
+
+# First Monday of each month at 9 AM
+0 9 1-7 * 1
+```
+
+## Creating Scheduled Agents
+
+### Via AI Manager
+
+The easiest way to create scheduled agents:
+
+```
+You: "Check my Gmail every morning at 9 AM and summarize emails"
+
+AI Manager: "I'll create a daily scheduled agent:
+           - Schedule: 0 9 * * * (9 AM daily)
+           - Task: Check Gmail inbox
+           - Action: Summarize and report
+           
+           Shall I proceed?"
+```
+
+### Via Dashboard
+
+1. Navigate to **Agents** → **Create Agent**
+2. Enter task description
+3. Select **Schedule** as execution type
+4. Choose preset or enter custom cron
+5. Set timezone
+6. Review and deploy
+
+### Via API
+
+```bash
+curl -X POST https://api.aventir.io/v1/agents \
+  -H "Authorization: Bearer $TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "Daily Email Summary",
+    "taskDescription": "Check Gmail and summarize",
+    "type": "scheduled",
+    "schedule": "0 9 * * *",
+    "timezone": "America/New_York"
+  }'
+```
+
+## Timezone Handling
+
+### Setting Timezone
+
+Agents respect timezone settings:
+
+```json
+{
+  "schedule": "0 9 * * *",
+  "timezone": "America/Los_Angeles"
+}
+```
+
+Available timezones follow the IANA database (e.g., `America/New_York`, `Europe/London`, `Asia/Tokyo`).
+
+### Daylight Saving Time
+
+Schedules automatically adjust for DST:
+
+- `America/New_York`: Adjusts for EST/EDT
+- `Europe/London`: Adjusts for GMT/BST
+- Explicit offsets (e.g., `UTC-5`) do NOT adjust
+
+### Multi-Timezone Teams
+
+For teams across timezones:
+
+```
+Agent 1: "Send summary at 9 AM EST (for East Coast team)"
+Agent 2: "Send summary at 9 AM PST (for West Coast team)"
+```
+
+## Schedule Management
+
+### Viewing Schedules
+
+Dashboard shows all scheduled agents:
+
+```
+Scheduled Agents:
+
+Email Summary
+- Schedule: Daily 9:00 AM EST
+- Next run: Tomorrow 9:00 AM
+- Last run: Today 9:03 AM (Success)
+
+Shopify Monitor  
+- Schedule: Every hour
+- Next run: In 23 minutes
+- Status: Active
+
+Weekly Report
+- Schedule: Mondays 8:00 AM EST
+- Next run: Monday 8:00 AM
+- Last run: Last Monday (Success)
+```
+
+### Modifying Schedules
+
+Change existing schedules:
+
+**Via AI Manager:**
+```
+"Change the Email Summary from 9 AM to 8 AM"
+"Pause the Shopify Monitor"
+"Resume the Weekly Report"
+```
+
+**Via Dashboard:**
+1. Find agent in list
+2. Click **Edit Schedule**
+3. Update cron expression or timezone
+4. Save changes
+
+### Pausing and Resuming
+
+Temporarily disable without deleting:
+
+```bash
+# Pause
+curl -X POST https://api.aventir.io/v1/agents/123/pause \
+  -H "Authorization: Bearer $TOKEN"
+
+# Resume
+curl -X POST https://api.aventir.io/v1/agents/123/resume \
+  -H "Authorization: Bearer $TOKEN"
+```
+
+### Deleting Schedules
+
+Permanently remove scheduled agents:
+
+1. Navigate to agent details
+2. Click **Delete**
+3. Confirm deletion
+4. Associated schedule is removed
+
+<Warning>
+Deleting a scheduled agent cannot be undone. Task history is retained for 30 days.
+</Warning>
+
+## Predictive Scheduling
+
+Aventir learns your patterns and suggests optimal schedules:
+
+### How It Works
+
+1. **Activity Analysis**: Monitors when you're most active
+2. **Result Timing**: Tracks when you review results
+3. **Optimization**: Recommends better timing
+
+### Example Suggestion
+
+```
+💡 Schedule Optimization
+
+I noticed you usually check the Email Summary results 
+between 8:45-9:15 AM. Consider moving the schedule to 
+8:30 AM so results are ready when you need them.
+
+Current: 9:00 AM
+Suggested: 8:30 AM
+
+[Apply] [Dismiss] [Learn More]
+```
+
+### Schedule Feedback
+
+Rate schedule effectiveness:
+
+```
+"How was this timing?"
+[Too Early] [Perfect] [Too Late]
+```
+
+Feedback improves future recommendations.
+
+## Operational Playbooks
+
+For recurring operational tasks, Aventir provides advanced scheduling features:
+
+### State Tracking
+
+Track progress across runs:
+
+```
+Daily Email Processing:
+- Run 1: Processed emails 1-50
+- Run 2: Processed emails 51-100  
+- Run 3: Processed emails 101-150
+```
+
+### Checkpoint System
+
+Resume from previous state:
+
+```
+Agent: "Continuing from email #152..."
+```
+
+### Recurrence Patterns
+
+Detect and optimize common patterns:
+
+| Pattern | Detection | Optimization |
+|---------|-----------|--------------|
+| Daily reports | Cron frequency | Batch similar tasks |
+| Weekly summaries | Day of week | Pre-fetch data |
+| Hourly checks | Short interval | Reduce to event-based |
+
+## Scheduling Best Practices
+
+### Stagger High-Load Tasks
+
+Avoid scheduling multiple agents at the exact same time:
+
+**Poor:**
+```
+9:00 AM - Email Summary
+9:00 AM - Shopify Check
+9:00 AM - Slack Monitor
+```
+
+**Better:**
+```
+8:45 AM - Email Summary
+9:00 AM - Shopify Check
+9:15 AM - Slack Monitor
+```
+
+### Consider Service Limits
+
+Respect third-party API rate limits:
+
+```
+Shopify API: 40 requests/minute
+Schedule: Every 2 minutes (safe)
+
+Notion API: 3 requests/second  
+Schedule: Every 5 minutes (conservative)
+```
+
+### Use Appropriate Frequency
+
+Match schedule to business needs:
+
+| Task | Recommended Frequency |
+|------|----------------------|
+| Email summary | Once or twice daily |
+| Social media monitoring | Every 1-2 hours |
+| Inventory check | Every 4-6 hours |
+| Competitor tracking | Weekly or bi-weekly |
+| Security monitoring | Continuous or every 5 min |
+
+### Plan for Timezone Changes
+
+Be aware of schedule disruptions:
+
+- **DST transitions**: Some times don't exist (spring forward)
+- **Multiple runs**: Some times occur twice (fall back)
+- **International**: Be clear about which timezone applies
+
+## Scheduling Conflict Resolution
+
+### Concurrent Execution
+
+Multiple agents can run simultaneously:
+
+```
+9:00 AM - Email Summary (starts)
+9:01 AM - Shopify Check (starts)
+9:02 AM - Slack Monitor (starts)
+```
+
+Each gets its own VM.
+
+### Resource Limits
+
+Plans have concurrency limits:
+
+| Plan | Max Concurrent |
+|------|----------------|
+| Free | 1 |
+| Starter | 2 |
+| Pro | 5 |
+| Business | 10 |
+
+Excess tasks queue until capacity available.
+
+### Queue Management
+
+View and manage queued tasks:
+
+```
+Queue (2 tasks waiting):
+
+1. LinkedIn Monitor (waiting 3 min)
+2. Twitter Check (waiting 1 min)
+
+[Run Now] [Cancel] [Reschedule]
+```
+
+## Troubleshooting Schedules
+
+### Agent Not Running
+
+**Symptoms:** Scheduled time passes but agent doesn't execute
+
+**Check:**
+- Is the agent paused?
+- Are there sufficient credits?
+- Is the schedule in the correct timezone?
+- Has the agent been deleted?
+
+### Runs at Wrong Time
+
+**Symptoms:** Agent runs 1 hour early/late
+
+**Causes:**
+- Timezone mismatch
+- DST transition
+- Schedule uses UTC offset instead of named timezone
+
+**Fix:**
+- Update to named timezone (e.g., `America/New_York`)
+- Review timezone settings
+- Check DST handling
+
+### Missed Runs
+
+**Symptoms:** Agent should have run but didn't
+
+**Causes:**
+- Service downtime
+- Credit exhaustion
+- Max runtime exceeded
+- Manual pause
+
+**Recovery:**
+- Retry missed run
+- Adjust schedule
+- Review error logs
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Monitoring" icon="activity" href="/user-guide/monitoring">
+    Track scheduled agent performance.
+  </Card>
+  <Card title="Managing Tasks" icon="list-check" href="/user-guide/managing-tasks">
+    View and manage task execution.
+  </Card>
+  <Card title="Predictive Scheduling" icon="sparkles" href="/advanced/proactive-features">
+    Learn about AI-optimized scheduling.
+  </Card>
+  <Card title="API Reference" icon="code" href="/api-reference/agents">
+    Manage schedules programmatically.
+  </Card>
+</CardGroup>

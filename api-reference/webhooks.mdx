@@ -1,0 +1,45 @@
+---
+title: "Webhooks API"
+description: "Configure webhooks for real-time events"
+---
+
+# Webhooks API
+
+Receive real-time notifications via webhooks.
+
+## Create Webhook
+
+```bash
+POST /v1/webhooks
+```
+
+Request:
+```json
+{
+  "url": "https://your-app.com/webhook",
+  "events": ["agent.completed", "agent.failed"],
+  "secret": "whsec_your_secret"
+}
+```
+
+## Webhook Events
+
+- `agent.created`, `agent.started`, `agent.completed`, `agent.failed`
+- `task.created`, `task.completed`, `task.failed`
+- `credential.expired`
+
+## Signature Verification
+
+Verify webhook authenticity using HMAC-SHA256.
+
+## List Webhooks
+
+```bash
+GET /v1/webhooks
+```
+
+## Delete Webhook
+
+```bash
+DELETE /v1/webhooks/{id}
+```

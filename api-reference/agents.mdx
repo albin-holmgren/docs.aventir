@@ -1,0 +1,57 @@
+---
+title: "Agents API"
+description: "Manage agents via API"
+---
+
+# Agents API
+
+Create, manage, and control agents programmatically.
+
+## List Agents
+
+```bash
+GET /v1/agents
+```
+
+## Create Agent
+
+```bash
+POST /v1/agents
+```
+
+Request body:
+```json
+{
+  "name": "Daily Report",
+  "task_description": "Check Gmail and summarize",
+  "type": "scheduled",
+  "schedule": "0 9 * * *",
+  "timezone": "America/New_York"
+}
+```
+
+## Get Agent
+
+```bash
+GET /v1/agents/{id}
+```
+
+## Update Agent
+
+```bash
+PATCH /v1/agents/{id}
+```
+
+## Delete Agent
+
+```bash
+DELETE /v1/agents/{id}
+```
+
+## Control Agent
+
+```bash
+POST /v1/agents/{id}/pause
+POST /v1/agents/{id}/resume
+POST /v1/agents/{id}/trigger
+```

@@ -1,0 +1,47 @@
+---
+title: "Tasks API"
+description: "Manage task execution via API"
+---
+
+# Tasks API
+
+Query and manage agent task execution.
+
+## List Tasks
+
+```bash
+GET /v1/tasks
+```
+
+Query parameters:
+- `agent_id`: Filter by agent
+- `status`: Filter by status
+- `from`, `to`: Date range
+
+## Get Task
+
+```bash
+GET /v1/tasks/{id}
+```
+
+Returns task details including logs and results.
+
+## Cancel Task
+
+```bash
+POST /v1/tasks/{id}/cancel
+```
+
+## Retry Task
+
+```bash
+POST /v1/tasks/{id}/retry
+```
+
+## Task Statistics
+
+```bash
+GET /v1/tasks/stats
+```
+
+Returns aggregate statistics for all tasks.

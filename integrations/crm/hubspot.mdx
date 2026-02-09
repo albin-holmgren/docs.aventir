@@ -1,0 +1,37 @@
+---
+title: "HubSpot Integration"
+description: "Automate HubSpot CRM with Aventir agents"
+---
+
+# HubSpot Integration
+
+Connect Aventir to HubSpot to automate CRM workflows and sales operations.
+
+## Setup
+
+1. In HubSpot, go to **Settings** → **Integrations** → **Private Apps**
+2. Create private app named "Aventir" with scopes:
+   - `crm.objects.contacts.read`
+   - `crm.objects.contacts.write`
+   - `crm.objects.deals.read`
+3. Copy the access token
+4. In Aventir, go to **Settings** → **Integrations** → **HubSpot**
+5. Paste token and save
+
+## Capabilities
+
+- Create and update contacts
+- Manage deals and pipelines
+- Track tasks and activities
+- Generate sales reports
+
+## Workflows
+
+- Lead qualification and routing
+- Pipeline monitoring
+- Activity logging
+- Renewal tracking
+
+## Rate Limits
+
+100-1000+ requests/day depending on HubSpot plan.

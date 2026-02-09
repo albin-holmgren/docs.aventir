@@ -1,0 +1,442 @@
+---
+title: "Creating Agents"
+description: "Step-by-step guide to creating and deploying AI agents"
+---
+
+# Creating Agents
+
+Agents are the core automation units in Aventir. This guide covers all the ways to create agents and configure them for your specific needs.
+
+## Methods for Creating Agents
+
+### 1. Via AI Manager Chat (Recommended)
+
+The easiest way to create an agent is through natural language:
+
+```
+"Create an agent that checks my Gmail every morning at 9 AM 
+and summarizes important emails."
+```
+
+The AI Manager will:
+- Analyze your request
+- Detect required skills (Gmail)
+- Check for credentials
+- Propose a configuration
+- Deploy upon approval
+
+### 2. Via Dashboard
+
+For more control, use the web dashboard:
+
+1. Navigate to **Agents** → **Create Agent**
+2. Enter task description
+3. Select schedule (one-time, daily, weekly, custom)
+4. Choose required integrations
+5. Review and deploy
+
+### 3. Via API
+
+Programmatically create agents using the REST API:
+
+```bash
+curl -X POST https://api.aventir.io/v1/agents \
+  -H "Authorization: Bearer $TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "Email Summarizer",
+    "taskDescription": "Check Gmail and summarize important emails",
+    "type": "scheduled",
+    "schedule": "0 9 * * *",
+    "requiredIntegrations": ["gmail"]
+  }'
+```
+
+## Agent Configuration
+
+### Required Fields
+
+| Field | Description | Example |
+|-------|-------------|---------|
+| Name | Descriptive agent name | "Daily Email Summary" |
+| Task Description | Detailed instructions | "Check Gmail for unread emails..." |
+| Type | Execution pattern | one-time, scheduled, triggered |
+
+### Optional Fields
+
+| Field | Description | Default |
+|-------|-------------|---------|
+| Schedule | Cron expression for recurring runs | None |
+| Credentials | Required service credentials | Auto-detected |
+| Max Runtime | Maximum execution time (minutes) | 30 |
+| Notifications | Alert destinations | In-app only |
+
+## Task Description Best Practices
+
+A good task description produces better results:
+
+### Be Specific
+
+**Good:**
+```
+"Check my Gmail inbox every morning at 8 AM. Find emails from 
+addresses containing '@company.com' with subject lines containing 
+'urgent' or 'action required'. Extract sender name, subject, and 
+first 2 sentences. Send a Slack message to #alerts with this info."
+```
+
+**Less Effective:**
+```
+"Check my email"
+```
+
+### Include Context
+
+Help the agent understand the business context:
+
+```
+"I'm the sales manager. Check HubSpot every Friday at 5 PM and 
+create a summary of deals that moved to 'Closed Won' this week. 
+Include deal value, company name, and contact person. Email the 
+summary to sales-team@company.com."
+```
+
+### Specify Success Criteria
+
+Define what "done" looks like:
+
+```
+"Monitor our Shopify store every hour. Alert me via email if:
+- Any product has inventory < 10
+- Any order has status 'payment_failed'
+- More than 5 orders pending > 24 hours
+
+Stop monitoring at 6 PM daily."
+```
+
+## Agent Types
+
+### One-Time Agents
+
+Execute once and complete. Ideal for:
+- Research tasks
+- Data extraction
+- Migration projects
+- Report generation
+
+```
+"Find the top 10 competitors in the AI automation space by 
+searching Product Hunt and G2. Create a spreadsheet with 
+company name, website, pricing, and key features."
+```
+
+### Scheduled Agents
+
+Run on a recurring schedule. Ideal for:
+- Daily reports
+- Monitoring
+- Maintenance tasks
+- Regular updates
+
+**Schedule Formats (Cron):**
+
+| Schedule | Cron Expression |
+|----------|-----------------|
+| Daily 9 AM | `0 9 * * *` |
+| Every hour | `0 * * * *` |
+| Weekly Monday 8 AM | `0 8 * * 1` |
+| Weekdays 5 PM | `0 17 * * 1-5` |
+
+### Triggered Agents
+
+Execute in response to events. Ideal for:
+- New email received
+- Order placed
+- Form submitted
+- Webhook received
+
+```
+"When a new order comes into Shopify, check inventory levels. 
+If any item has < 10 stock, send a Slack alert to #inventory."
+```
+
+## Credential Management
+
+### Auto-Detection
+
+Aventir analyzes your task and suggests required credentials:
+
+```
+Task: "Check Gmail..."
+AI Manager: "This requires Gmail access. Add Gmail credentials?"
+```
+
+### Adding Credentials
+
+**Before Agent Creation:**
+1. Go to **Settings** → **Credentials**
+2. Click **Add Credential**
+3. Select service type
+4. Enter credentials (encrypted immediately)
+
+**During Agent Creation:**
+1. AI Manager detects missing credential
+2. Prompts you to add it
+3. Credential is saved and linked to agent
+
+### Credential Types
+
+| Service | Type | Setup |
+|---------|------|-------|
+| Gmail | OAuth | Google OAuth flow |
+| Slack | OAuth | Slack app installation |
+| Shopify | API Key | Admin API credentials |
+| HubSpot | OAuth | HubSpot app connection |
+| Notion | OAuth | Notion integration |
+
+## Pre-Deployment Checklist
+
+Before deploying an agent, verify:
+
+- [ ] Task description is clear and specific
+- [ ] Required credentials are added and valid
+- [ ] Schedule is correctly configured (if recurring)
+- [ ] You have sufficient credits for execution
+- [ ] Notification preferences are set
+- [ ] You understand the estimated credit cost
+
+## Deployment Process
+
+### Step 1: Provisioning
+
+```
+[Status: Initializing]
+- Allocating virtual machine...
+- Installing browser and tools...
+- Configuring agent environment...
+```
+
+### Step 2: Execution
+
+```
+[Status: Working]
+- Agent logged into Gmail
+- Checking inbox...
+- Found 12 unread emails
+- Analyzing content...
+- Compiling summary...
+```
+
+### Step 3: Completion
+
+```
+[Status: Completed]
+- Task completed successfully
+- 12 emails analyzed
+- 3 marked as important
+- Summary sent via chat
+- VM cleaned up
+```
+
+## Monitoring Deployment
+
+### Real-Time Updates
+
+Watch progress in the dashboard or chat:
+
+- VM provisioning status
+- Login attempts and successes
+- Actions being taken
+- Screenshots (if enabled)
+- Intermediate results
+- Errors and retries
+
+### Logs
+
+View detailed execution logs:
+
+```
+2024-01-15 09:00:03 - Agent started
+2024-01-15 09:00:15 - Navigating to gmail.com
+2024-01-15 09:00:18 - Login page loaded
+2024-01-15 09:00:22 - Credentials entered
+2024-01-15 09:00:25 - 2FA required - waiting for user
+...
+```
+
+## Handling Deployment Issues
+
+### Insufficient Credits
+
+**Error:** "Cannot deploy: insufficient credits"
+
+**Solutions:**
+- Purchase credit pack
+- Upgrade subscription
+- Reduce agent frequency
+- Optimize task description
+
+### Credential Errors
+
+**Error:** "Failed to authenticate with Gmail"
+
+**Solutions:**
+- Verify credentials are correct
+- Check if password expired
+- Re-authenticate via OAuth
+- Update 2FA settings
+
+### VM Provisioning Failures
+
+**Error:** "Failed to allocate virtual machine"
+
+**Solutions:**
+- Check DigitalOcean status
+- Verify API token is valid
+- Retry deployment
+- Contact support if persistent
+
+## Post-Deployment Management
+
+### Monitoring Active Agents
+
+View all agents in the dashboard:
+
+```
+Active Agents (4):
+
+Email Summarizer
+- Status: Idle (next run: Tomorrow 9 AM)
+- Last run: Success (200 credits)
+- Total runs: 47
+
+Shopify Monitor
+- Status: Working (started 5 min ago)
+- Current task: Checking inventory
+- ETA: 2 minutes
+```
+
+### Modifying Agents
+
+Via AI Manager:
+```
+"Change the Email Summarizer to run at 8 AM instead of 9 AM"
+```
+
+Via Dashboard:
+1. Find agent in list
+2. Click **Edit**
+3. Modify schedule or description
+4. Save changes
+
+### Pausing and Resuming
+
+Pause without deleting:
+```
+"Pause the Shopify Monitor until next week"
+```
+
+Resume later:
+```
+"Resume the Shopify Monitor"
+```
+
+### Deleting Agents
+
+Permanently remove an agent:
+
+1. Navigate to agent details
+2. Click **Delete**
+3. Confirm deletion
+4. Associated VMs are cleaned up
+
+<Warning>
+Deleting an agent cannot be undone. Task history and logs are retained for 30 days.
+</Warning>
+
+## Advanced Configuration
+
+### Custom Instructions
+
+Add specific guidance for the agent:
+
+```
+Task: "Check LinkedIn messages"
+
+Custom Instructions:
+"Ignore messages from recruiters. Focus on messages from 
+connections I've had > 6 months. Report any messages 
+containing 'partnership' or 'collaboration'."
+```
+
+### Retry Policies
+
+Configure behavior on failure:
+
+| Setting | Default | Options |
+|---------|---------|---------|
+| Max Retries | 3 | 0-10 |
+| Retry Delay | 5 minutes | 1-60 minutes |
+| On Failure | Notify | Notify, Pause, Delete |
+
+### Notification Channels
+
+Receive alerts via:
+
+- In-app notifications
+- Email
+- Slack
+- Webhook
+
+## Best Practices
+
+### Start Simple
+
+Begin with a one-time agent to test the workflow:
+```
+"Check my Gmail once and show me what you find"
+```
+
+Then convert to scheduled:
+```
+"Set that up to run every morning"
+```
+
+### Test Credentials First
+
+Before deploying, verify credentials work:
+```
+"Can you log into my Gmail to verify the credentials work?"
+```
+
+### Monitor Credit Usage
+
+Track costs per agent:
+```
+"Show me credit usage for all my agents this week"
+```
+
+### Review and Refine
+
+Regularly review agent outputs:
+```
+"The email summaries are too detailed. Just give me sender 
+and subject line only."
+```
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Managing Tasks" icon="list-check" href="/user-guide/managing-tasks">
+    Learn how to monitor and manage agent execution.
+  </Card>
+  <Card title="Scheduling" icon="calendar" href="/user-guide/scheduling">
+    Configure recurring automation schedules.
+  </Card>
+  <Card title="Credentials" icon="lock" href="/user-guide/credentials">
+    Securely manage service authentication.
+  </Card>
+  <Card title="Monitoring" icon="activity" href="/user-guide/monitoring">
+    Track agent performance and health.
+  </Card>
+</CardGroup>

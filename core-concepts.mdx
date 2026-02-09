@@ -1,0 +1,280 @@
+---
+title: "Core Concepts"
+description: "Understand the fundamental concepts behind Aventir"
+---
+
+# Core Concepts
+
+Understanding these core concepts will help you get the most out of Aventir's AI agent platform.
+
+## AI Manager
+
+The AI Manager is your primary interface to Aventir. Powered by Claude Opus, it serves as an intelligent orchestration layer that:
+
+- **Understands natural language** - Describe tasks in plain English
+- **Plans and delegates** - Breaks down complex tasks into agent actions
+- **Monitors progress** - Tracks agent execution and reports results
+- **Learns preferences** - Adapts to your communication style over time
+
+### How It Works
+
+When you chat with the AI Manager, it:
+
+1. Analyzes your request to understand intent
+2. Determines if an agent is needed or if it can answer directly
+3. Configures the appropriate agent with necessary credentials
+4. Deploys the agent to a virtual computer
+5. Returns results and insights as the agent works
+
+### Example Interaction
+
+```
+You: "I need to check my Shopify orders every morning and 
+      email me a summary"
+
+AI Manager: "I'll create a scheduled agent that:
+           - Logs into your Shopify admin at 9 AM daily
+           - Reviews orders from the previous 24 hours
+           - Compiles a summary with order counts and totals
+           - Emails the summary to you
+           
+           Required: Shopify credentials and email integration.
+           Estimated cost: 250 credits per run.
+           
+           Should I proceed?"
+```
+
+## Agents
+
+Agents are autonomous AI workers that operate virtual computers to complete tasks. Each agent:
+
+- Runs on a dedicated DigitalOcean VM
+- Uses Claude 3.5 Haiku for cost-efficient operation
+- Has access to 25+ built-in tools
+- Can integrate with 21+ third-party services
+- Learns from each execution to improve performance
+
+### Agent Lifecycle
+
+```
+Initializing → Idle → Working → Completed/Failed
+```
+
+**States:**
+
+- **Initializing** - VM is being provisioned
+- **Idle** - Ready to receive tasks
+- **Working** - Actively executing a task
+- **Completed** - Task finished successfully
+- **Failed** - Task encountered an error
+- **Terminated** - Manually stopped or timed out
+
+### Agent Types
+
+| Type | Description | Use Case |
+|------|-------------|----------|
+| One-time | Single execution | Research, data extraction |
+| Scheduled | Recurring runs | Daily reports, monitoring |
+| Triggered | Event-based | New email, order received |
+| Real-time | Continuous operation | Live monitoring, chat bots |
+
+## Virtual Computers
+
+Each agent operates on a virtual machine with:
+
+- **Ubuntu Linux** operating system
+- **Chrome browser** for web automation
+- **Desktop environment** with VNC access
+- **Isolated network** for security
+
+### Why Virtual Computers?
+
+Unlike API-based automation, virtual computers can:
+
+- Interact with any website or web app
+- Handle complex login flows and 2FA
+- Navigate visual interfaces
+- Use tools without official APIs
+- Adapt to website changes
+
+### Security
+
+- Each VM is isolated from others
+- No persistent storage between runs (unless configured)
+- Encrypted VNC connections
+- Automatic cleanup after task completion
+
+## Skills
+
+Skills are pre-defined capabilities that agents can use. The Skills Registry contains 21 built-in skills covering common business applications.
+
+### Skill Categories
+
+| Category | Services |
+|----------|----------|
+| Email | Gmail, Outlook |
+| Social | LinkedIn, Twitter, Instagram, Facebook |
+| Productivity | Notion, Google Drive/Docs/Sheets |
+| Communication | Slack, Discord, Zoom |
+| CRM | HubSpot, Salesforce |
+| Finance | QuickBooks, Stripe |
+| E-commerce | Shopify |
+| Development | GitHub, Jira |
+
+### Skill Components
+
+Each skill includes:
+
+- **Instructions** - Best practices for using the service
+- **Common tasks** - Typical workflows and patterns
+- **Known issues** - Documented problems and solutions
+- **Credential requirements** - What access the agent needs
+- **Risk level** - Low, medium, or high sensitivity
+
+## Memory Systems
+
+Aventir implements multiple memory systems to help agents learn and improve:
+
+### Structured Memory (Moltbot-Style)
+
+Inspired by Moltbot, agents maintain four key documents:
+
+- **SOUL** - Agent personality and working style
+- **USER_CONTEXT** - Facts about you and your preferences
+- **LONG_TERM_MEMORY** - Important learnings to remember
+- **WORKSPACE** - Current task notes and goal tree
+
+### A-Mem (Linked Memories)
+
+Semantic memory retrieval that:
+
+- Stores learnings with embeddings
+- Retrieves relevant memories for each task
+- Links related concepts together
+- Decays old, unused memories
+
+### Cross-Agent Knowledge
+
+Learnings are shared across all your agents:
+
+- Success tips from one agent help others
+- Failure patterns are documented system-wide
+- Best practices propagate automatically
+- User preferences are universally known
+
+## Credentials
+
+Aventir securely stores credentials for accessing your accounts:
+
+### Credential Types
+
+| Type | Description | Example |
+|------|-------------|---------|
+| Password | Username/password | Gmail, Shopify |
+| OAuth | Token-based access | Slack, HubSpot |
+| API Key | Direct API access | OpenAI, Stripe |
+| Cookie | Session persistence | Complex login flows |
+
+### Security
+
+- **Encryption**: AES-256-GCM with unique IV per credential
+- **Storage**: Encrypted at rest in Supabase
+- **Access**: Only accessible by your agents
+- **Audit**: All credential usage is logged
+
+### Best Practices
+
+- Use OAuth when available (more secure than passwords)
+- Enable 2FA on your accounts when possible
+- Use dedicated service accounts for automation
+- Regularly rotate API keys
+
+## Credits
+
+Credits are Aventir's usage-based pricing unit:
+
+### Credit Burn Rates
+
+| Action | Credits |
+|--------|---------|
+| Typical agent run | 200 |
+| Heavy multi-step task | 600 |
+| Real-time monitoring (per hour) | 1,000 |
+| AI Manager chat message | 5 |
+| Web research query | 50 |
+| 1,000 tokens processed | 1 |
+
+### Credit Optimization
+
+Aventir automatically optimizes costs:
+
+- Claude 3.5 Haiku for agents (~12x cheaper than Opus)
+- Screenshot compression (50% quality, 1280px max)
+- Context window trimming (last 10 messages)
+- Early completion detection
+- Max 30 iterations per task
+
+## Integrations
+
+Aventir connects to external services through the Integration Runtime:
+
+### Integration Architecture
+
+```
+Agent → Integration Runtime → Provider API
+```
+
+### Supported Protocols
+
+- **OAuth 2.0** - Secure token-based access
+- **API Keys** - Direct API authentication
+- **Webhooks** - Real-time event notifications
+- **Polling** - Scheduled data synchronization
+
+### Adding Integrations
+
+1. Go to Settings → Integrations
+2. Select the service you want to connect
+3. Complete OAuth flow or enter API key
+4. Authorize the requested permissions
+5. The integration becomes available to your agents
+
+## Workflows
+
+Workflows chain multiple agents together to complete complex processes:
+
+### Workflow Components
+
+- **Trigger** - What starts the workflow (schedule, event, manual)
+- **Steps** - Sequential or parallel agent executions
+- **Conditions** - Branching logic based on results
+- **Notifications** - Alerts and reporting
+
+### Example Workflow
+
+```
+Daily Sales Report Workflow:
+1. Agent A: Download Shopify orders (9 AM)
+2. Agent B: Analyze sales data
+3. Agent C: Email summary to team
+4. Agent D: Post to Slack channel
+```
+
+## Next Steps
+
+Now that you understand the core concepts:
+
+<CardGroup cols={2}>
+  <Card title="Create Your First Agent" icon="robot" href="/user-guide/creating-agents">
+    Learn the practical steps to deploy an AI agent.
+  </Card>
+  <Card title="Explore Integrations" icon="plug" href="/integrations/overview">
+    Connect Aventir to your existing tools.
+  </Card>
+  <Card title="Understand Memory" icon="brain" href="/advanced/memory-system">
+    Deep dive into how agents learn and remember.
+  </Card>
+  <Card title="Review Pricing" icon="credit-card" href="/pricing">
+    Understand credits and plan options.
+  </Card>
+</CardGroup>

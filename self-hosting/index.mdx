@@ -1,0 +1,81 @@
+---
+title: "Self-Hosting Guide"
+description: "Deploy Aventir on your own infrastructure"
+---
+
+# Self-Hosting Guide
+
+Deploy Aventir on your own infrastructure for complete control.
+
+## Prerequisites
+
+- Node.js 18+
+- Supabase account
+- Anthropic API key
+- DigitalOcean account
+- Domain name
+
+## Quick Start
+
+```bash
+git clone https://github.com/aventir/aventir.git
+cd aventir
+npm install
+cp env.example .env.local
+```
+
+## Configuration
+
+Edit `.env.local`:
+
+```bash
+# Supabase
+NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your_anon_key
+SUPABASE_SERVICE_ROLE_KEY=your_service_role_key
+
+# Anthropic
+ANTHROPIC_API_KEY=sk-ant-api03-...
+
+# DigitalOcean
+DIGITALOCEAN_API_TOKEN=dop_v1_...
+
+# App
+NEXT_PUBLIC_APP_URL=http://localhost:3000
+```
+
+## Database Setup
+
+Run migrations in Supabase SQL Editor:
+
+```sql
+-- See supabase/migrations/ directory
+```
+
+## Deploy
+
+### Web App (Vercel)
+
+```bash
+vercel
+```
+
+### VM Server
+
+```bash
+cd apps/vm-server
+npm install
+npm start
+```
+
+### Integration Runtime
+
+```bash
+cd apps/integration-runtime
+npm install
+npm start
+```
+
+## Next Steps
+
+See [Installation](/installation) for detailed setup instructions.

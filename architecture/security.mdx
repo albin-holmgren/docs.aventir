@@ -1,0 +1,64 @@
+---
+title: "Security"
+description: "Security architecture and practices"
+---
+
+# Security
+
+Aventir implements comprehensive security measures to protect your data.
+
+## Credential Security
+
+### Encryption
+- AES-256-GCM encryption
+- Unique IV per credential
+- Master key stored separately
+- No plain text storage
+
+### Access Control
+- Row Level Security (RLS)
+- Agent-scoped access
+- Audit logging
+- No export capability
+
+## VM Security
+
+### Isolation
+- Dedicated VM per agent
+- No shared resources
+- Automatic cleanup
+- Network isolation
+
+### Data Handling
+- No persistent storage (unless configured)
+- Encrypted VNC connections
+- Secure provisioning
+- Regular updates
+
+## API Security
+
+- API key authentication
+- Rate limiting
+- OAuth 2.0 support
+- HTTPS/TLS only
+
+## Database Security
+
+- Supabase Row Level Security
+- Encrypted at rest
+- Audit logging
+- Regular backups
+
+## Compliance
+
+- SOC 2 Type II certified
+- GDPR compliant
+- Data retention controls
+- Privacy by design
+
+## Best Practices
+
+- Use OAuth when available
+- Rotate API keys regularly
+- Enable 2FA on accounts
+- Monitor audit logs

@@ -1,0 +1,496 @@
+---
+title: "Managing Tasks"
+description: "Monitor, manage, and troubleshoot agent tasks"
+---
+
+# Managing Tasks
+
+Tasks are individual units of work executed by agents. This guide covers monitoring, troubleshooting, and optimizing task execution.
+
+## Task Lifecycle
+
+```
+Pending → Queued → Running → Completed/Failed
+```
+
+### States
+
+| State | Description |
+|-------|-------------|
+| **Pending** | Waiting to start |
+| **Queued** | In queue for resource allocation |
+| **Running** | Currently executing |
+| **Completed** | Finished successfully |
+| **Failed** | Encountered an error |
+| **Cancelled** | Manually stopped |
+| **Timeout** | Exceeded max runtime |
+
+## Viewing Tasks
+
+### Dashboard View
+
+Navigate to **Agents** → **Tasks** to see all tasks:
+
+```
+Recent Tasks (Last 7 Days)
+
+Email Summarizer - Jan 15, 9:03 AM
+Status: Completed ✓
+Duration: 2m 15s
+Credits: 200
+
+Shopify Monitor - Jan 15, 8:00 AM
+Status: Failed ✗
+Error: Login timeout
+Duration: 5m 30s
+
+Competitor Research - Jan 14, 2:15 PM
+Status: Completed ✓
+Duration: 12m 45s
+Credits: 450
+```
+
+### Filter and Search
+
+Filter tasks by:
+- Agent name
+- Status (completed, failed, running)
+- Date range
+- Credit usage
+- Execution time
+
+### Task Details
+
+Click any task to see:
+- Full execution log
+- Screenshots (if enabled)
+- Actions taken
+- Insights reported
+- Resource usage
+- Error details (if failed)
+
+## Real-Time Monitoring
+
+### Live Task Execution
+
+Watch agents work in real-time:
+
+```
+[9:00:00] Task started
+[9:00:05] Navigating to gmail.com
+[9:00:08] Login page loaded
+[9:00:12] Credentials entered
+[9:00:15] Inbox loaded (47 emails)
+[9:00:18] Analyzing email content...
+[9:00:25] Found 3 important emails
+[9:00:30] Generating summary
+[9:00:32] Task completed ✓
+```
+
+### Progress Indicators
+
+Long-running tasks show:
+- Percentage complete (when available)
+- Current action
+- Estimated time remaining
+- Recent insights
+
+### Notifications
+
+Receive updates via:
+- In-app notifications
+- Email
+- Slack
+- Webhook
+
+Configure in **Settings** → **Notifications**
+
+## Task Results
+
+### Success Results
+
+Completed tasks provide:
+
+**Summary:**
+```
+Task: Daily Email Summary
+Completed: Jan 15, 9:03 AM
+Duration: 2m 15s
+Credits: 200
+
+Results:
+- 47 emails checked
+- 3 important emails found
+- 1 urgent action required
+- Summary delivered
+```
+
+**Insights:**
+- Key findings from the task
+- Data extracted
+- Links generated
+- Attachments saved
+
+**Evidence Bundle:**
+- Screenshots of key steps
+- Proof of actions taken
+- Verification data
+
+### Failure Analysis
+
+Failed tasks include:
+
+**Error Details:**
+```
+Task: Shopify Order Check
+Failed: Jan 15, 8:05 AM
+Error: Login timeout after 5 minutes
+
+Possible Causes:
+- Shopify temporarily unavailable
+- Network connectivity issue
+- Password changed
+- 2FA required
+
+Recommended Actions:
+- Retry now
+- Check Shopify status
+- Verify credentials
+```
+
+**Recovery Options:**
+- Retry immediately
+- Retry with delay
+- Update and retry
+- Skip and continue
+
+## Task History
+
+### Retention
+
+Task history is retained based on plan:
+
+| Plan | Retention |
+|------|-----------|
+| Free | 7 days |
+| Starter | 30 days |
+| Pro | 90 days |
+| Business | 1 year |
+
+### Searching History
+
+Find past tasks:
+
+```
+"Show me all email summary tasks from last month"
+"Find failed Shopify tasks"
+"What was my highest credit usage task?"
+```
+
+### Exporting Data
+
+Export task history:
+- CSV format
+- Date range selection
+- Filter by agent/status
+- Includes metadata and results
+
+## Retry and Recovery
+
+### Automatic Retries
+
+Agents automatically retry on transient failures:
+
+| Error Type | Retries | Delay |
+|------------|---------|-------|
+| Network error | 3 | 1 minute |
+| Rate limited | 5 | Exponential backoff |
+| Service unavailable | 3 | 2 minutes |
+| Login timeout | 2 | 30 seconds |
+
+### Manual Retry
+
+Retry a failed task:
+
+1. Navigate to task details
+2. Click **Retry**
+3. Choose options:
+   - Same configuration
+   - Update and retry
+   - Retry with different credentials
+
+### Bulk Operations
+
+Select multiple tasks:
+
+```
+[ ] Task 1
+[x] Task 2  
+[x] Task 3
+[ ] Task 4
+
+[Retry Selected] [Archive] [Export]
+```
+
+## Troubleshooting Tasks
+
+### Common Issues
+
+**Task Timeout**
+```
+Error: Task exceeded maximum runtime (30 minutes)
+
+Causes:
+- Task more complex than expected
+- Website loading slowly
+- Multiple retry attempts
+
+Solutions:
+- Increase max runtime setting
+- Break into smaller tasks
+- Simplify task description
+```
+
+**Login Failures**
+```
+Error: Failed to authenticate with Gmail
+
+Causes:
+- Password changed
+- 2FA required
+- Account locked
+- CAPTCHA detected
+
+Solutions:
+- Update credentials
+- Use OAuth instead of password
+- Check account status
+```
+
+**Website Changes**
+```
+Error: Element not found
+
+Causes:
+- Website UI updated
+- Page structure changed
+- Maintenance mode
+
+Solutions:
+- Update task description
+- Specify alternative selectors
+- Wait for maintenance to complete
+```
+
+**Credit Exhaustion**
+```
+Error: Insufficient credits
+
+Solutions:
+- Purchase credit pack
+- Upgrade plan
+- Optimize task efficiency
+```
+
+### Debugging Failed Tasks
+
+**Step 1: Review Logs**
+```
+[8:00:00] Starting task
+[8:00:05] Navigating to site
+[8:00:10] Page loaded
+[8:00:15] Looking for element: .login-button
+[8:00:20] Element not found
+[8:00:25] Retrying...
+[8:00:30] Element still not found
+[8:00:35] Task failed
+```
+
+**Step 2: Check Screenshots**
+View the last screenshot to see:
+- What the agent saw
+- Error messages displayed
+- Page loading state
+
+**Step 3: Analyze Pattern**
+```
+"This task has failed 3 times in a row at the same step"
+```
+
+**Step 4: Refine and Retry**
+Update the task with:
+- More specific instructions
+- Alternative approaches
+- Updated selectors
+- Better error handling
+
+## Task Optimization
+
+### Credit Efficiency
+
+Optimize tasks to use fewer credits:
+
+| Before | After | Savings |
+|--------|-------|---------|
+| Check every hour | Check at specific times | 80% |
+| Full page screenshots | Action-only screenshots | 50% |
+| 50 iterations | 30 iterations | 40% |
+| No early exit | task_complete on done | 30% |
+
+### Performance Improvements
+
+Speed up task execution:
+
+- **Batch actions**: Group multiple operations
+- **Reduce screenshots**: Only capture key steps
+- **Optimize selectors**: Use stable CSS selectors
+- **Cache results**: Reuse data when possible
+
+### Task Splitting
+
+Break large tasks into smaller ones:
+
+**Before:**
+```
+"Check all our social media platforms, summarize mentions, 
+respond to urgent ones, and create a report"
+```
+
+**After:**
+```
+Task 1: "Check Twitter for mentions"
+Task 2: "Check LinkedIn for mentions"  
+Task 3: "Compile social media summary"
+Task 4: "Send summary report"
+```
+
+## Scheduled Tasks
+
+### Schedule Overview
+
+View all scheduled tasks:
+
+```
+Daily Schedules:
+
+9:00 AM - Email Summarizer
+10:00 AM - Slack Check
+11:00 AM - Shopify Orders
+
+Weekly Schedules:
+
+Monday 8:00 AM - Weekly Report
+Friday 5:00 PM - Pipeline Review
+```
+
+### Modifying Schedules
+
+Change task timing:
+
+```
+"Change Email Summarizer from 9 AM to 8 AM"
+```
+
+Or via dashboard:
+1. Find scheduled task
+2. Click **Edit Schedule**
+3. Update cron expression
+4. Save changes
+
+### Pausing Scheduled Tasks
+
+Temporarily stop without deleting:
+
+```
+"Pause the Shopify Monitor until next week"
+```
+
+Resume later:
+```
+"Resume the Shopify Monitor"
+```
+
+## Task Dependencies
+
+### Workflow Chaining
+
+Create multi-step workflows:
+
+```
+Workflow: Daily Sales Report
+
+Step 1: Check Shopify (9:00 AM)
+  ↓
+Step 2: Analyze Data (9:15 AM)
+  ↓
+Step 3: Send Email (9:30 AM)
+```
+
+### Dependency Types
+
+| Type | Behavior |
+|------|----------|
+| Sequential | Wait for previous to complete |
+| Parallel | Run simultaneously |
+| Conditional | Run only if previous succeeded |
+| Time-based | Run at specific intervals |
+
+## Task Analytics
+
+### Usage Statistics
+
+View task performance:
+
+```
+This Month:
+- Total tasks: 156
+- Completed: 142 (91%)
+- Failed: 12 (8%)
+- Cancelled: 2 (1%)
+
+Average duration: 4m 30s
+Average credits: 220
+Total credits: 34,320
+```
+
+### Success Rate
+
+Track agent reliability:
+
+| Agent | Success Rate | Avg Duration |
+|-------|--------------|--------------|
+| Email Summary | 98% | 2m 15s |
+| Shopify Monitor | 85% | 5m 30s |
+| LinkedIn Check | 92% | 3m 45s |
+
+### Trend Analysis
+
+Identify patterns:
+
+```
+Failures by Day:
+- Monday: 2% (lowest)
+- Tuesday: 8%
+- Wednesday: 5%
+- Thursday: 12% (highest)
+- Friday: 6%
+
+Recommendation: Review Thursday scheduled tasks
+```
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Scheduling" icon="calendar" href="/user-guide/scheduling">
+    Configure recurring automation schedules.
+  </Card>
+  <Card title="Monitoring" icon="activity" href="/user-guide/monitoring">
+    Track agent health and performance.
+  </Card>
+  <Card title="API Reference" icon="code" href="/api-reference/tasks">
+    Manage tasks programmatically.
+  </Card>
+  <Card title="Error Recovery" icon="wrench" href="/advanced/error-recovery">
+    Learn about automatic recovery strategies.
+  </Card>
+</CardGroup>

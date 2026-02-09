@@ -1,0 +1,44 @@
+---
+title: "Memory Systems"
+description: "How Aventir implements agent learning"
+---
+
+# Memory Systems
+
+Aventir uses multiple memory systems to enable agent learning.
+
+## Structured Memory
+
+Four-document system inspired by Moltbot:
+- SOUL: Personality and style
+- USER_CONTEXT: User facts and preferences
+- LONG_TERM_MEMORY: Important learnings
+- WORKSPACE: Current task tracking
+
+## A-Mem (Semantic)
+
+Vector-based semantic retrieval:
+- Embeddings using text-embedding-3-small
+- Similarity search for relevant memories
+- Automatic decay of unused memories
+
+## Cross-Agent Knowledge
+
+Learnings shared across all user agents:
+- Success patterns propagate
+- Failure patterns documented
+- Best practices spread automatically
+
+## Storage
+
+- Vector database for embeddings
+- PostgreSQL for structured data
+- Encrypted at rest
+- Row Level Security
+
+## Privacy
+
+- User controls all memory
+- Can delete anytime
+- Not shared between users
+- Audit logging

@@ -1,0 +1,305 @@
+---
+title: "AI Manager Chat"
+description: "Using the AI Manager to create and manage AI agents"
+---
+
+# AI Manager Chat
+
+The AI Manager is your conversational interface to Aventir. Powered by Claude Opus, it understands natural language requests and translates them into autonomous agent deployments.
+
+## Starting a Conversation
+
+Access the AI Manager through the web app at [app.aventir.io](https://app.aventir.io). The interface resembles modern chat applications with:
+
+- Message history with context preservation
+- Real-time streaming responses
+- File and image attachments (coming soon)
+- Voice mode for hands-free interaction
+
+### Your First Message
+
+Introduce yourself and describe what you'd like to automate:
+
+```
+"I'm a marketing manager at a SaaS company. I need help with 
+social media monitoring, competitor research, and lead tracking."
+```
+
+The AI Manager will ask clarifying questions to understand:
+
+- Which tools you use (LinkedIn, Twitter, HubSpot, etc.)
+- Your workflow preferences
+- Required credentials
+- Desired frequency (one-time, daily, weekly)
+
+## Creating Agents Through Chat
+
+The primary way to create agents is by describing your task:
+
+### Simple Task
+
+```
+"Check my Gmail for emails from john@company.com and summarize 
+what he needs."
+```
+
+The AI Manager will:
+1. Detect this requires Gmail access
+2. Check if you have Gmail credentials stored
+3. Create a one-time agent to complete the task
+4. Report results in the conversation
+
+### Complex Workflow
+
+```
+"Every Monday morning, I need to:
+1. Check Shopify for weekend orders
+2. Create a summary in Google Sheets
+3. Post low-stock alerts to Slack
+4. Email the report to my team"
+```
+
+The AI Manager will:
+1. Break down into component tasks
+2. Identify required integrations (Shopify, Google Sheets, Slack)
+3. Propose a scheduled workflow
+4. Create credentials if needed
+5. Deploy agents with dependencies
+
+## Understanding AI Manager Responses
+
+### Task Proposals
+
+When you request automation, the AI Manager responds with a plan:
+
+```
+I'll create a workflow that:
+
+**Agent 1: Shopify Order Collector**
+- Runs every Monday at 8 AM
+- Downloads weekend order data
+- Credits: 200 per run
+
+**Agent 2: Report Generator**
+- Updates Google Sheets with order summary
+- Credits: 150 per run
+
+**Agent 3: Slack Notifier**
+- Posts low-stock items to #inventory channel
+- Credits: 50 per run
+
+**Agent 4: Email Sender**
+- Emails complete report to team
+- Credits: 100 per run
+
+Total: 500 credits per Monday
+Required: Shopify, Google, Slack credentials
+```
+
+### Agent Progress Updates
+
+While agents run, you receive real-time updates:
+
+```
+[9:00 AM] Agent "Shopify Collector" started
+[9:02 AM] Logged into Shopify successfully
+[9:03 AM] Found 47 orders from weekend
+[9:04 AM] Agent completed - extracted order data
+
+[9:05 AM] Agent "Report Generator" started
+[9:06 AM] Updated Google Sheet "Weekly Orders"
+[9:07 AM] Agent completed
+```
+
+## Conversation Context
+
+The AI Manager maintains context across your conversation:
+
+- **Short-term**: Last 10 messages for immediate context
+- **Long-term**: User profile, preferences, and history
+- **Cross-conversation**: Learnings from all your agents
+
+### Contextual Awareness
+
+```
+You: "The same thing for Tuesday"
+AI Manager: "I'll set up the same Shopify → Sheets → Slack 
+          workflow for Tuesday mornings?"
+```
+
+## Proactive Suggestions
+
+The AI Manager learns your patterns and suggests optimizations:
+
+### Suggestion Types
+
+- **New agents** - Based on your activities
+- **Schedule optimization** - Better timing based on your usage
+- **Workflow improvements** - More efficient approaches
+- **Integration opportunities** - Connecting your tools
+
+### Example Suggestion
+
+```
+💡 Suggestion
+
+I noticed you check Gmail and then manually create tasks in Notion 
+every morning. Would you like me to create an agent that:
+
+- Checks Gmail at 9 AM
+- Extracts action items from emails
+- Creates tasks in your Notion database
+- Sends you a summary
+
+This would save you approximately 15 minutes daily.
+[Create Agent] [Not Now] [Never]
+```
+
+## Personalization
+
+The AI Manager adapts to your communication style:
+
+### Detected Preferences
+
+- **Communication style**: Formal vs. casual
+- **Detail level**: Brief summaries vs. comprehensive reports
+- **Decision approach**: Ask for confirmation vs. act autonomously
+- **Response timing**: Immediate vs. scheduled digests
+
+### Setting Preferences
+
+You can explicitly set preferences:
+
+```
+"Please keep responses brief and only ask for confirmation 
+on tasks costing more than 500 credits."
+```
+
+## Managing Agents via Chat
+
+### List Active Agents
+
+```
+"What agents do I have running?"
+```
+
+Response:
+```
+You have 4 active agents:
+
+1. **Email Summarizer** (Daily, 9 AM)
+   Last run: Today at 9:03 AM - Success
+   
+2. **LinkedIn Monitor** (Hourly)
+   Status: Running now
+   
+3. **Shopify Reporter** (Weekly, Monday 8 AM)
+   Next run: Tomorrow
+   
+4. **Competitor Tracker** (One-time)
+   Status: Completed 2 hours ago
+```
+
+### Modify Agents
+
+```
+"Change the Email Summarizer to run at 8 AM instead of 9 AM"
+```
+
+```
+"Pause the LinkedIn Monitor until next week"
+```
+
+### Stop Agents
+
+```
+"Stop the Shopify Reporter permanently"
+```
+
+## Best Practices
+
+### Clear Task Descriptions
+
+**Good:**
+```
+"Check my Gmail inbox every morning at 8 AM, find emails from 
+clients with 'urgent' in the subject, and send me a Slack 
+notification with the sender and subject line."
+```
+
+**Less Effective:**
+```
+"Check my email"
+```
+
+### Provide Context
+
+Share relevant background information:
+
+```
+"I'm the VP of Sales. I need to track our HubSpot pipeline 
+every Friday at 5 PM and share the forecast with the exec team."
+```
+
+### Iterate and Refine
+
+Agents improve with feedback:
+
+```
+"That report was good, but can you also include deals that 
+moved stages this week?"
+```
+
+## Troubleshooting
+
+### Agent Not Created
+
+If the AI Manager can't create an agent:
+
+1. **Check credentials** - Required services may need authentication
+2. **Clarify the task** - Provide more specific instructions
+3. **Check credit balance** - Insufficient credits prevent deployment
+4. **Review limits** - You may have reached agent or task limits
+
+### Unexpected Results
+
+If an agent produces unexpected output:
+
+1. **Describe the issue** - "The report included refunded orders"
+2. **Specify corrections** - "Exclude orders with status 'refunded'"
+3. **The AI Manager updates** - The agent configuration will be refined
+
+### Conversation Lost
+
+If you need to reference a previous conversation:
+
+```
+"Last week you created an agent to check Shopify. Can you 
+modify it to also check inventory levels?"
+```
+
+## Voice Mode (Beta)
+
+Enable voice mode for hands-free interaction:
+
+1. Click the microphone icon in the chat
+2. Speak naturally to describe tasks
+3. The AI Manager transcribes and responds via text
+4. Use voice for quick agent creation while mobile
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Creating Agents" icon="robot" href="/user-guide/creating-agents">
+    Learn the complete agent creation workflow.
+  </Card>
+  <Card title="Managing Credentials" icon="lock" href="/user-guide/credentials">
+    Set up secure access to your accounts.
+  </Card>
+  <Card title="Scheduling" icon="calendar" href="/user-guide/scheduling">
+    Configure when and how often agents run.
+  </Card>
+  <Card title="Monitoring" icon="activity" href="/user-guide/monitoring">
+    Track agent performance and results.
+  </Card>
+</CardGroup>

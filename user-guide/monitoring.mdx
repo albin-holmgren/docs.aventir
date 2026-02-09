@@ -1,0 +1,470 @@
+---
+title: "Monitoring"
+description: "Monitor agent health, performance, and system status"
+---
+
+# Monitoring
+
+Monitor your agents' health, track performance metrics, and receive alerts when issues arise.
+
+## Dashboard Overview
+
+The main dashboard provides a comprehensive view of your automation:
+
+```
+Dashboard Overview
+
+Active Agents: 4 of 15
+Running Now: 1 (Shopify Monitor)
+Queue: 0 tasks waiting
+Credits Today: 850 used
+Success Rate: 94%
+
+Recent Activity:
+✓ Email Summary - 9:03 AM - 2m 15s
+✓ LinkedIn Check - 8:30 AM - 3m 45s
+✗ Shopify Report - Yesterday - Failed
+✓ Competitor Research - Yesterday - 12m
+```
+
+## Agent Health
+
+### Health Status
+
+Each agent displays a health indicator:
+
+| Status | Icon | Meaning |
+|--------|------|---------|
+| Healthy | 🟢 | Running normally |
+| Warning | 🟡 | Minor issues detected |
+| Critical | 🔴 | Requires attention |
+| Unknown | ⚪ | No recent activity |
+
+### Health Factors
+
+Health is determined by:
+
+- **Success rate** - Percentage of completed vs. failed tasks
+- **Response time** - Average task execution duration
+- **Error rate** - Frequency of failures
+- **Credit efficiency** - Credits per task vs. baseline
+- **Schedule adherence** - On-time execution rate
+
+### Health History
+
+View health trends over time:
+
+```
+Email Summarizer - Last 30 Days
+
+Health Score: 98/100
+Success Rate: 99%
+Avg Duration: 2m 10s (was 2m 45s)
+Errors: 1 timeout
+Trend: ↗️ Improving
+```
+
+## Real-Time Monitoring
+
+### Live Activity Feed
+
+Watch agents execute in real-time:
+
+```
+[09:00:00] Shopify Monitor started
+[09:00:03] Connecting to Shopify...
+[09:00:05] Authenticated ✓
+[09:00:08] Checking orders...
+[09:00:12] Found 23 new orders
+[09:00:15] Analyzing inventory...
+[09:00:18] Task completed ✓ (200 credits)
+```
+
+### VM Status
+
+Monitor virtual machine health:
+
+```
+VM Status - Agent: Shopify Monitor
+
+Status: Running
+Uptime: 8m 23s
+CPU: 12%
+Memory: 256MB / 512MB
+Network: Connected
+Location: NYC1 (DigitalOcean)
+```
+
+### Screenshot Monitoring
+
+View agent progress via screenshots (if enabled):
+
+```
+[Screenshot 1] 09:00:05 - Login page loaded
+[Screenshot 2] 09:00:08 - Authenticated, dashboard visible
+[Screenshot 3] 09:00:12 - Orders page loaded
+```
+
+<Info>
+Screenshots can be disabled for sensitive tasks or to reduce credit usage.
+</Info>
+
+## Performance Metrics
+
+### Task Performance
+
+Track execution metrics:
+
+| Metric | Description | Target |
+|--------|-------------|--------|
+| Duration | Time to complete | < 5 minutes |
+| Credits | Cost per task | 150-300 |
+| Iterations | Steps taken | < 30 |
+| Retries | Failed attempts | < 2 |
+| Insights | Findings reported | > 0 |
+
+### Historical Performance
+
+Compare performance over time:
+
+```
+Email Summarizer Performance (Last 30 Days)
+
+Week 1:
+- Avg Duration: 3m 12s
+- Avg Credits: 280
+- Success Rate: 95%
+
+Week 4:
+- Avg Duration: 2m 08s ⬇️ 33% faster
+- Avg Credits: 195 ⬇️ 30% more efficient
+- Success Rate: 99% ⬆️ Improved
+```
+
+### Agent Comparison
+
+Compare performance across agents:
+
+```
+Performance Comparison (Last 7 Days)
+
+Agent           | Duration | Credits | Success
+----------------|----------|----------|--------
+Email Summary   | 2m 15s   | 200     | 98%
+Shopify Monitor | 5m 30s   | 350     | 92%
+LinkedIn Check  | 3m 45s   | 275     | 95%
+Research        | 8m 20s   | 600     | 88%
+```
+
+## Credit Monitoring
+
+### Usage Tracking
+
+Monitor credit consumption:
+
+```
+Today's Usage
+
+Email Summary: 200 credits (9 AM)
+Shopify Monitor: 350 credits (8 AM)
+Slack Check: 150 credits (10 AM)
+AI Chat: 15 credits
+
+Total: 715 credits
+```
+
+### Usage Alerts
+
+Receive notifications when:
+
+- Daily usage exceeds threshold
+- Credits running low
+- Unusual spike detected
+- Plan limit approaching
+
+Configure in **Settings** → **Notifications**
+
+### Usage Trends
+
+Track usage patterns:
+
+```
+Weekly Usage (Last 4 Weeks)
+
+Week 1: 3,200 credits
+Week 2: 3,450 credits (+7%)
+Week 3: 3,800 credits (+10%)
+Week 4: 3,600 credits (-5%)
+
+Average: 3,513 credits/week
+Projected: ~15,000 credits/month
+```
+
+## Error Monitoring
+
+### Error Types
+
+Track and categorize errors:
+
+| Error Type | Count | Trend |
+|------------|-------|-------|
+| Login failures | 3 | ↗️ Increasing |
+| Timeout | 1 | → Stable |
+| Rate limited | 5 | ↘️ Decreasing |
+| Not found | 2 | → Stable |
+| Network | 0 | → Stable |
+
+### Error Details
+
+View specific error information:
+
+```
+Error Analysis - Last 7 Days
+
+Most Common: Login Timeout
+Occurrences: 3 times
+Agent: Shopify Monitor
+Pattern: Occurs on Tuesdays
+Possible Cause: Shopify maintenance window
+Recommendation: Reschedule to 10 AM
+```
+
+### Failure Patterns
+
+Aventir learns from failures:
+
+```
+Pattern Detected:
+
+Agent: Email Summarizer
+Pattern: Fails at 9:00 AM on Mondays
+Root Cause: Gmail rate limiting during peak
+Solution: Retry with exponential backoff
+Applied: Yes
+```
+
+## Notifications and Alerts
+
+### Notification Channels
+
+Receive alerts via:
+
+- **In-app**: Dashboard notifications
+- **Email**: Detailed summaries
+- **Slack**: Channel messages
+- **Webhook**: Custom integrations
+
+### Alert Types
+
+| Alert | Trigger | Default |
+|-------|---------|---------|
+| Task Failed | Any task fails | On |
+| Task Completed | Successful completion | Off |
+| Agent Unhealthy | Health score < 80 | On |
+| Credits Low | < 20% remaining | On |
+| Schedule Missed | Agent didn't run on time | On |
+
+### Custom Alerts
+
+Create custom alert rules:
+
+```json
+{
+  "name": "High-value Order Alert",
+  "condition": "shopify_order_value > 1000",
+  "action": "send_slack_notification",
+  "channel": "#sales-alerts"
+}
+```
+
+## System Status
+
+### Aventir Status
+
+Check overall system health:
+
+- **API Status**: Response time, error rate
+- **VM Pool**: Available capacity
+- **Integration Runtime**: Service health
+- **Database**: Query performance
+
+View at [status.aventir.io](https://status.aventir.io)
+
+### Third-Party Status
+
+Monitor integrated services:
+
+```
+Service Health:
+
+✓ Gmail API - Operational
+✓ Shopify API - Operational
+⚠ Slack API - Degraded performance
+✓ HubSpot API - Operational
+```
+
+### Scheduled Maintenance
+
+Receive advance notice:
+
+```
+🔧 Scheduled Maintenance
+
+Date: Sunday, Jan 28, 2:00-4:00 AM EST
+Impact: Agent execution may be delayed
+Action Required: None
+```
+
+## Audit Logs
+
+### Activity Logging
+
+All actions are logged for compliance:
+
+```
+Audit Log (Last 30 Days)
+
+Jan 15, 9:03 AM - user@example.com
+Action: Created agent "Email Summary"
+Credits: 200
+
+Jan 15, 8:30 AM - user@example.com
+Action: Modified schedule for "Shopify Monitor"
+Old: 9:00 AM
+New: 8:30 AM
+
+Jan 14, 5:00 PM - user@example.com
+Action: Added Gmail credentials
+```
+
+### Log Retention
+
+Retention based on plan:
+
+| Plan | Retention |
+|------|-----------|
+| Free | 7 days |
+| Starter | 30 days |
+| Pro | 90 days |
+| Business | 1 year |
+
+## Health Checks
+
+### Automated Health Checks
+
+Agents are automatically checked:
+
+- **Heartbeat**: Every 5 minutes
+- **VM Status**: Resource utilization
+- **Task Queue**: Pending task count
+- **Credit Balance**: Remaining credits
+
+### Proactive Monitoring
+
+Aventir predicts and prevents issues:
+
+```
+⚠️ Predictive Alert
+
+Pattern: Shopify Monitor fails 30% of the time
+         on Tuesday mornings
+
+Prediction: Likely to fail tomorrow at 8 AM
+Recommendation: 
+- Reschedule to 9 AM
+- Or increase retry count
+
+[Reschedule Now] [Dismiss] [Learn More]
+```
+
+## Troubleshooting
+
+### High Resource Usage
+
+**Symptoms:** Agent using excessive credits or time
+
+**Investigate:**
+1. Review task logs for stuck operations
+2. Check for unnecessary screenshots
+3. Analyze iteration count
+4. Review error retries
+
+**Solutions:**
+- Optimize task description
+- Reduce screenshot frequency
+- Set iteration limits
+- Adjust retry policies
+
+### Declining Success Rate
+
+**Symptoms:** Agent increasingly failing
+
+**Common Causes:**
+- Website changed UI
+- Credentials expired
+- Service API updated
+- Rate limits tightened
+
+**Solutions:**
+- Update selectors in task
+- Refresh credentials
+- Review service documentation
+- Reduce frequency
+
+### Missing Expected Results
+
+**Symptoms:** Agent completes but with no/limited findings
+
+**Investigate:**
+1. Check if data exists at scheduled time
+2. Verify agent has correct access
+3. Review task scope
+4. Check for filtering criteria
+
+## Best Practices
+
+### Regular Review
+
+Schedule monthly monitoring reviews:
+
+- Review success rates
+- Analyze credit usage trends
+- Check for optimization opportunities
+- Update alert thresholds
+
+### Proactive Response
+
+Address alerts promptly:
+
+- Failed tasks: Investigate within 24 hours
+- Credit warnings: Plan purchases in advance
+- Health degradation: Optimize before failure
+
+### Documentation
+
+Document known issues:
+
+```
+Agent: Shopify Monitor
+Known Issue: Occasional timeout on Tuesday mornings
+Root Cause: Shopify maintenance window
+Workaround: Schedule for 9 AM instead of 8 AM
+Status: Monitoring
+```
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Managing Tasks" icon="list-check" href="/user-guide/managing-tasks">
+    View and troubleshoot task execution.
+  </Card>
+  <Card title="Error Recovery" icon="wrench" href="/advanced/error-recovery">
+    Learn about automatic recovery strategies.
+  </Card>
+  <Card title="API Reference" icon="code" href="/api-reference/agents">
+    Access monitoring data via API.
+  </Card>
+  <Card title="System Status" icon="activity" href="https://status.aventir.io">
+    Check Aventir platform status.
+  </Card>
+</CardGroup>

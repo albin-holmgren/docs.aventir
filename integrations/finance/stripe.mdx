@@ -1,0 +1,51 @@
+---
+title: "Stripe Integration"
+description: "Automate Stripe payments and billing with Aventir agents"
+---
+
+# Stripe Integration
+
+Connect Aventir to Stripe to monitor payments, manage subscriptions, and track revenue.
+
+## Overview
+
+Stripe integration enables:
+- Monitor transactions
+- Track subscription events
+- Generate revenue reports
+- Handle webhook events
+- Manage customer data
+
+## Setup
+
+1. Go to Stripe Dashboard → Developers → API keys
+2. Copy Secret key (starts with `sk_live_` or `sk_test_`)
+3. In Aventir, go to **Settings** → **Integrations** → **Stripe**
+4. Add API key and configure webhooks
+
+## Capabilities
+
+- List charges and payments
+- Check subscription status
+- View customer information
+- Handle refunds
+- Generate invoices
+
+## Workflows
+
+- Failed payment alerts
+- New subscription notifications
+- Daily revenue summaries
+- Churn monitoring
+- Invoice delivery
+
+## Security
+
+- Use restricted API keys when possible
+- Webhook signature verification
+- Test mode for development
+- Audit logging enabled
+
+## Rate Limits
+
+100 read requests per second for most endpoints.

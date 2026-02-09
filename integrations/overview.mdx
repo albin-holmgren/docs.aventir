@@ -1,0 +1,360 @@
+---
+title: "Integrations Overview"
+description: "Connect Aventir to your existing tools and services"
+---
+
+# Integrations Overview
+
+Aventir integrates with 21+ business tools, enabling agents to work seamlessly with your existing workflow.
+
+## Supported Integrations
+
+### By Category
+
+<CardGroup cols={3}>
+  <Card title="Email" icon="envelope" href="/integrations/email/gmail">
+    Gmail, Outlook
+  </Card>
+  <Card title="Social" icon="share-nodes" href="/integrations/social/linkedin">
+    LinkedIn, Twitter, Instagram, Facebook
+  </Card>
+  <Card title="Productivity" icon="folder-open" href="/integrations/productivity/notion">
+    Notion, Google Workspace
+  </Card>
+  <Card title="Communication" icon="message-dots" href="/integrations/communication/slack">
+    Slack, Discord, Zoom
+  </Card>
+  <Card title="CRM" icon="users" href="/integrations/crm/hubspot">
+    HubSpot, Salesforce
+  </Card>
+  <Card title="Finance" icon="money-bill" href="/integrations/finance/stripe">
+    QuickBooks, Stripe
+  </Card>
+  <Card title="E-commerce" icon="shopping-cart" href="/integrations/ecommerce/shopify">
+    Shopify
+  </Card>
+  <Card title="Development" icon="code" href="/integrations/development/github">
+    GitHub, Jira
+  </Card>
+  <Card title="AI Services" icon="sparkles" href="/integrations/ai/openai">
+    OpenAI, Perplexity, Firecrawl, ElevenLabs
+  </Card>
+</CardGroup>
+
+## Integration Architecture
+
+Aventir uses a Model Context Protocol (MCP) architecture for integrations:
+
+```
+Agent → Integration Runtime → Provider API
+```
+
+### How It Works
+
+1. **Agent requests action** - "Send Slack message"
+2. **Integration Runtime validates** - Check credentials, rate limits
+3. **Execute API call** - Call Slack API with proper authentication
+4. **Return result** - Success/failure back to agent
+
+### Authentication Methods
+
+| Method | Description | Best For |
+|--------|-------------|----------|
+| **OAuth 2.0** | Token-based, user consent | Most services |
+| **API Key** | Direct authentication | Backend services |
+| **Password** | Username/password legacy | Services without OAuth |
+
+## Adding an Integration
+
+### Step 1: Choose Service
+
+Navigate to **Settings** → **Integrations** and select the service you want to connect.
+
+### Step 2: Authenticate
+
+**For OAuth:**
+1. Click **Connect**
+2. Complete OAuth flow in popup
+3. Grant requested permissions
+4. Automatically connected
+
+**For API Key:**
+1. Enter API key from service dashboard
+2. Select appropriate permissions
+3. Test connection
+4. Save credentials
+
+### Step 3: Verify Connection
+
+Test the integration:
+
+```
+"Send a test message to Slack"
+"Check if my Gmail connection works"
+```
+
+### Step 4: Use in Agents
+
+Once connected, agents can automatically use the integration:
+
+```
+"Check my Slack messages every hour"
+"Post Shopify orders to our Slack channel"
+```
+
+## Integration Capabilities
+
+### Available Actions
+
+Each integration provides specific capabilities:
+
+**Gmail:**
+- Read emails
+- Send emails
+- Search inbox
+- Manage labels
+- Check attachments
+
+**Slack:**
+- Send messages
+- Read channels
+- Upload files
+- Add reactions
+- Create threads
+
+**Shopify:**
+- Read orders
+- Check inventory
+- View customers
+- Update products
+- Process refunds
+
+### Event Sources
+
+Some integrations support real-time events:
+
+| Integration | Event Type | Use Case |
+|-------------|------------|----------|
+| Slack | Webhook | New message received |
+| Shopify | Webhook | Order placed |
+| GitHub | Webhook | Issue created |
+| Notion | Polling | Database updated |
+
+### Bidirectional Flow
+
+Agents can both read and write:
+
+```
+Read: Check Gmail → Extract tasks → Write: Create Notion tasks
+```
+
+## Managing Integrations
+
+### View Connected Services
+
+Dashboard shows all integrations:
+
+```
+Connected Integrations:
+
+✓ Gmail - Active
+  Last used: 2 hours ago
+  
+✓ Slack - Active  
+  Last used: 5 minutes ago
+
+⚠ Shopify - Attention Required
+  Error: Token expired
+  
+✓ HubSpot - Active
+  Last used: Yesterday
+```
+
+### Disconnecting Services
+
+To remove an integration:
+
+1. Go to **Settings** → **Integrations**
+2. Find the service
+3. Click **Disconnect**
+4. Confirm removal
+
+<Warning>
+Disconnecting a service will cause agents using it to fail. Update or pause those agents first.
+</Warning>
+
+### Reconnecting
+
+If authentication expires:
+
+1. Integration shows "Attention Required"
+2. Click **Reconnect**
+3. Complete OAuth flow again
+4. Connection restored
+
+## Integration Best Practices
+
+### Use OAuth When Available
+
+OAuth is more secure than API keys:
+
+- Tokens can be revoked
+- Scoped permissions
+- No password exposure
+- Automatic refresh
+
+### Minimal Permissions
+
+Grant only needed permissions:
+
+**Good:**
+```
+Slack: chat:write in #alerts only
+Gmail: read-only inbox access
+```
+
+**Avoid:**
+```
+Slack: Full workspace admin
+Gmail: Send emails as any user
+```
+
+### Dedicated Accounts
+
+For business automation:
+
+- Create service accounts (e.g., `automation@company.com`)
+- Separate from personal accounts
+- Easier permission management
+- Clear audit trail
+
+### Monitor Usage
+
+Track integration activity:
+
+```
+Gmail API Usage (Last 30 Days):
+- API calls: 450
+- Rate limit: 1,000/day
+- Status: Healthy
+```
+
+### Regular Audits
+
+Review connected services monthly:
+
+- Remove unused integrations
+- Update expired credentials
+- Verify permissions still appropriate
+- Check for new scopes available
+
+## Troubleshooting
+
+### Connection Failed
+
+**Symptoms:** Unable to connect service
+
+**Solutions:**
+- Check popup blocker settings
+- Verify third-party cookies enabled
+- Ensure you have admin access to service
+- Try incognito/private window
+
+### Authentication Expired
+
+**Symptoms:** Integration shows "Token expired"
+
+**Solutions:**
+- Click **Reconnect**
+- Re-authorize the app
+- Check if account password changed
+- Verify app not revoked in service dashboard
+
+### Rate Limit Errors
+
+**Symptoms:** Agent fails with "rate limit exceeded"
+
+**Solutions:**
+- Reduce agent frequency
+- Check service rate limits
+- Upgrade service plan if needed
+- Use multiple accounts (if supported)
+
+### Permission Denied
+
+**Symptoms:** Agent can't perform action
+
+**Solutions:**
+- Check granted permissions in service dashboard
+- Reconnect with broader scopes
+- Verify account has required access level
+- Contact service admin
+
+## Integration-Specific Guides
+
+Each integration has detailed documentation:
+
+- **[Gmail](/integrations/email/gmail)** - Email automation
+- **[Slack](/integrations/communication/slack)** - Team messaging
+- **[Shopify](/integrations/ecommerce/shopify)** - E-commerce management
+- **[HubSpot](/integrations/crm/hubspot)** - CRM automation
+- **[Notion](/integrations/productivity/notion)** - Knowledge management
+- **[GitHub](/integrations/development/github)** - Development workflow
+- **[OpenAI](/integrations/ai/openai)** - AI model access
+
+## Custom Integrations
+
+### Request New Integration
+
+Need a service not listed?
+
+1. Contact support@aventir.io
+2. Describe the service and use case
+3. Vote on existing requests
+4. Build custom via API
+
+### API-Based Integration
+
+For services without native integration:
+
+```bash
+# Use the Aventir API to build custom workflows
+curl -X POST https://api.aventir.io/v1/agents \
+  -H "Authorization: Bearer $TOKEN" \
+  -d '{
+    "taskDescription": "Call custom API endpoint..."
+  }'
+```
+
+## Security
+
+### Data Handling
+
+- Credentials encrypted with AES-256-GCM
+- API calls made server-side (never exposed to client)
+- Tokens refreshed automatically
+- Access logged for audit
+
+### Compliance
+
+- OAuth 2.0 industry standard
+- No password storage for OAuth services
+- Scoped permissions minimize exposure
+- Compliance with service ToS
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Gmail Integration" icon="envelope" href="/integrations/email/gmail">
+    Set up email automation.
+  </Card>
+  <Card title="Slack Integration" icon="slack" href="/integrations/communication/slack">
+    Connect team messaging.
+  </Card>
+  <Card title="Shopify Integration" icon="shopping-bag" href="/integrations/ecommerce/shopify">
+    Automate e-commerce workflows.
+  </Card>
+  <Card title="All Integrations" icon="plug" href="/integrations/email/gmail">
+    Browse all 21+ integrations.
+  </Card>
+</CardGroup>

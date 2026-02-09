@@ -1,0 +1,51 @@
+---
+title: "API Introduction"
+description: "Getting started with the Aventir API"
+---
+
+# API Introduction
+
+The Aventir API allows you to programmatically manage agents, tasks, and integrations.
+
+## Base URL
+
+```
+https://api.aventir.io/v1
+```
+
+## Authentication
+
+All API requests require an API key in the Authorization header:
+
+```bash
+curl https://api.aventir.io/v1/agents \
+  -H "Authorization: Bearer YOUR_API_KEY"
+```
+
+Get your API key from **Settings** → **API Keys** in the dashboard.
+
+## Rate Limits
+
+| Plan | Rate Limit |
+|------|------------|
+| Free | 100 requests/hour |
+| Starter | 500 requests/hour |
+| Pro | 2000 requests/hour |
+| Business | 10000 requests/hour |
+
+## Response Format
+
+All responses are JSON with `data` and `meta` fields.
+
+## Error Handling
+
+Standard HTTP status codes with detailed error messages.
+
+## SDKs
+
+- JavaScript/TypeScript: `npm install aventir`
+- Python: `pip install aventir`
+
+## Webhooks
+
+Receive real-time events for agent and task state changes.

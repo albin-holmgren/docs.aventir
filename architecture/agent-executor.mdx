@@ -1,0 +1,40 @@
+---
+title: "Agent Executor"
+description: "How agents execute tasks on virtual computers"
+---
+
+# Agent Executor
+
+The Agent Executor manages agent task execution on virtual computers.
+
+## Lifecycle
+
+1. **Initialization**: VM provisioning and setup
+2. **Task Preparation**: Load credentials and context
+3. **Execution**: Run agent with tools and integrations
+4. **Completion**: Report results and cleanup
+
+## Key Features
+
+- Claude 3.5 Haiku for cost-efficient operation
+- 25+ built-in tools
+- Integration with 21+ services
+- Screenshot capture and streaming
+- Error handling and retries
+- Memory integration
+
+## Tool System
+
+Agents have access to:
+- Computer tools (mouse, keyboard, screenshots)
+- Browser automation
+- Integration tools
+- File system access
+- System commands
+
+## Error Recovery
+
+Automatic retry with exponential backoff:
+- Network errors: 3 retries
+- Rate limits: 5 retries
+- Login failures: 2 retries

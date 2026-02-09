@@ -1,0 +1,57 @@
+---
+title: "Conversations API"
+description: "Manage AI Manager conversations via API"
+---
+
+# Conversations API
+
+Create and manage conversations with the AI Manager programmatically.
+
+## List Conversations
+
+```bash
+GET /v1/conversations
+```
+
+## Create Conversation
+
+```bash
+POST /v1/conversations
+```
+
+Request:
+```json
+{
+  "title": "Email Automation Setup"
+}
+```
+
+## Get Conversation
+
+```bash
+GET /v1/conversations/{id}
+```
+
+## Send Message
+
+```bash
+POST /v1/conversations/{id}/messages
+```
+
+Request:
+```json
+{
+  "content": "Create an agent to check my Gmail daily",
+  "role": "user"
+}
+```
+
+## Delete Conversation
+
+```bash
+DELETE /v1/conversations/{id}
+```
+
+## Streaming Responses
+
+Messages can be streamed in real-time using Server-Sent Events (SSE).

@@ -1,0 +1,54 @@
+---
+title: "System Overview"
+description: "High-level architecture of Aventir"
+---
+
+# Architecture Overview
+
+Aventir's architecture enables autonomous AI agents to securely operate virtual computers.
+
+## Components
+
+### AI Manager
+Claude Opus-powered orchestration layer for natural language task understanding.
+
+### Dynamic Agent Builder
+Automatically configures agents based on task requirements.
+
+### Virtual Computers
+DigitalOcean VMs with Ubuntu, Chrome, and desktop environment.
+
+### Skills Registry
+21 pre-built skills for common business applications.
+
+### Integration Runtime
+MCP-based system for third-party service connections.
+
+### Memory Systems
+Structured and semantic memory for learning and improvement.
+
+## Data Flow
+
+```
+User Request → AI Manager → Agent Builder → VM Execution
+                                    ↓
+                              Integrations
+                                    ↓
+                              Results
+```
+
+## Security
+
+- Encrypted credentials (AES-256-GCM)
+- Isolated VMs per agent
+- Row Level Security in database
+- Audit logging
+
+## Tech Stack
+
+- Next.js 14, React, TypeScript
+- Tailwind CSS, Shadcn/UI
+- Supabase (PostgreSQL, Auth, Realtime)
+- Anthropic Claude
+- DigitalOcean VMs
+- Vercel deployment

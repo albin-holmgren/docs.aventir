@@ -1,0 +1,51 @@
+---
+title: "Integration Runtime"
+description: "How Aventir connects to third-party services"
+---
+
+# Integration Runtime
+
+The Integration Runtime provides secure connections to 21+ third-party services.
+
+## Architecture
+
+```
+Agent → Integration Runtime → Provider API
+```
+
+## Authentication
+
+- OAuth 2.0 for user-facing services
+- API keys for backend services
+- Encrypted credential storage (AES-256-GCM)
+
+## Protocols
+
+- **OAuth 2.0**: Secure token-based access
+- **Webhooks**: Real-time event notifications
+- **Polling**: Scheduled data sync
+- **API Keys**: Direct authentication
+
+## Provider Packs
+
+Modular packs for each service:
+- Gmail Pack
+- Slack Pack
+- Shopify Pack
+- HubSpot Pack
+- And 17+ more
+
+## Rate Limiting
+
+Automatic respect for provider limits:
+- Built-in rate limiters
+- Request queuing
+- Exponential backoff
+- Token bucket algorithms
+
+## Security
+
+- Server-side API calls (never client-side)
+- Scoped permissions only
+- Automatic token refresh
+- Audit logging

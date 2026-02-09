@@ -1,0 +1,382 @@
+---
+title: "Gmail Integration"
+description: "Automate Gmail with Aventir agents"
+---
+
+# Gmail Integration
+
+Connect Aventir to Gmail to automate email workflows - reading, sending, searching, and organizing your inbox.
+
+## Overview
+
+The Gmail integration enables agents to:
+- Read and analyze emails
+- Send emails and replies
+- Search the inbox
+- Manage labels and filters
+- Check for attachments
+- Monitor specific senders or subjects
+
+## Setup
+
+### Prerequisites
+
+- Google account with Gmail access
+- Browser access for OAuth flow
+- Permissions to grant app access
+
+### Connect Gmail
+
+1. Navigate to **Settings** → **Integrations**
+2. Find **Gmail** and click **Connect**
+3. Select your Google account
+4. Review requested permissions
+5. Click **Allow**
+6. Connection confirmed
+
+### OAuth Scopes
+
+Aventir requests these Gmail permissions:
+
+| Scope | Purpose |
+|-------|---------|
+| `gmail.readonly` | Read emails and inbox |
+| `gmail.send` | Send emails |
+| `gmail.modify` | Manage labels, mark read/unread |
+| `gmail.metadata` | View email metadata |
+
+### 2FA/App Passwords
+
+If you use 2FA with Gmail:
+
+1. Go to Google Account → Security
+2. Enable 2-Step Verification
+3. Go to App Passwords
+4. Generate app password for "Mail"
+5. Use this password in Aventir (if not using OAuth)
+
+## Capabilities
+
+### Reading Emails
+
+Agents can access your inbox:
+
+```
+"Check my Gmail for unread emails from clients"
+```
+
+Available operations:
+- List emails (with filters)
+- Read email content
+- View attachments
+- Check sender and recipients
+- See timestamps
+
+### Sending Emails
+
+Compose and send messages:
+
+```
+"Send a thank you email to john@example.com"
+```
+
+Supported features:
+- Plain text and HTML
+- Attachments
+- CC and BCC
+- Reply and forward
+
+### Searching
+
+Powerful Gmail search:
+
+```
+"Find all emails from boss@company.com about Q4 budget"
+```
+
+Supports all Gmail search operators:
+- `from:` Sender address
+- `to:` Recipient address
+- `subject:` Subject line
+- `has:attachment` Has attachments
+- `is:unread` Unread emails
+- `after:` Date range
+- `label:` Specific label
+
+### Label Management
+
+Organize emails automatically:
+
+```
+"Label all emails from support@company.com as 'Support'"
+```
+
+Available actions:
+- Apply labels
+- Remove labels
+- Create new labels
+- Archive messages
+- Mark read/unread
+
+### Attachment Handling
+
+Work with email attachments:
+
+```
+"Check emails with PDF attachments from accounting"
+```
+
+Features:
+- List attachments
+- Download attachments
+- Check file types
+- Extract data from files
+
+## Common Workflows
+
+### Daily Email Summary
+
+```
+"Every morning at 9 AM:
+1. Check Gmail for unread emails
+2. Identify important ones (from VIP list)
+3. Summarize key points
+4. Send summary to Slack"
+```
+
+### Auto-Reply
+
+```
+"When I receive an email to support@company.com:
+1. Send auto-reply acknowledging receipt
+2. Create ticket in HubSpot
+3. Notify team in Slack"
+```
+
+### Newsletter Digest
+
+```
+"Weekly on Fridays:
+1. Search Gmail for newsletters (label:newsletters)
+2. Extract key articles and updates
+3. Compile into digest
+4. Send to team email list"
+```
+
+### Follow-up Reminders
+
+```
+"Check emails I sent 3 days ago that haven't been replied to
+Create follow-up tasks in Notion"
+```
+
+## Security
+
+### Data Handling
+
+- Emails accessed only when agent runs
+- No persistent storage of email content
+- Encrypted transmission (HTTPS/TLS)
+- No human access to your emails
+
+### Privacy
+
+- Aventir cannot read your emails outside of agent execution
+- OAuth tokens can be revoked anytime
+- No email data shared with third parties
+- Audit log of all email access
+
+### Revoking Access
+
+To remove Gmail access:
+
+1. Go to **Settings** → **Integrations**
+2. Click **Disconnect** next to Gmail
+2. Or revoke in Google Account → Security → Third-party apps
+
+## Rate Limits
+
+Gmail API limits apply:
+
+| Limit | Value |
+|-------|-------|
+| Per-minute quota | 250 requests |
+| Per-day quota | 1 billion (for consumer accounts) |
+| Per-user | 250 per second (bursts allowed) |
+
+Aventir automatically respects these limits with built-in rate limiting.
+
+## Troubleshooting
+
+### Connection Failed
+
+**Symptoms:** OAuth flow fails or times out
+
+**Solutions:**
+- Check popup blocker settings
+- Ensure third-party cookies enabled
+- Try different browser
+- Use incognito/private window
+
+### Authentication Errors
+
+**Symptoms:** Agent fails with "authentication error"
+
+**Solutions:**
+- Reconnect Gmail integration
+- Check if Google password changed
+- Verify 2FA settings
+- Regenerate app password (if using)
+
+### Rate Limit Errors
+
+**Symptoms:** "Rate limit exceeded" errors
+
+**Solutions:**
+- Reduce agent frequency
+- Batch operations together
+- Use more specific search queries
+- Upgrade to Google Workspace for higher limits
+
+### Specific Email Not Found
+
+**Symptoms:** Agent can't find expected emails
+
+**Solutions:**
+- Check search query syntax
+- Verify email exists in inbox
+- Ensure agent has access to correct label
+- Check if email in spam/trash
+
+## Best Practices
+
+### Use Specific Search Queries
+
+**Good:**
+```
+"Find unread emails from john@company.com received today"
+```
+
+**Less Effective:**
+```
+"Check my email"
+```
+
+### Limit Scope
+
+Be specific about what emails to access:
+
+```
+"Check only the 'Work' label, not all emails"
+```
+
+### Handle Sensitive Data
+
+For sensitive emails:
+
+```
+"Summarize emails but don't include specific dollar amounts"
+```
+
+### Test First
+
+Before setting up scheduled agents:
+
+```
+"Run once and show me what emails you'd summarize"
+```
+
+## Example Agents
+
+### Support Ticket Monitor
+
+```
+Agent: Support Monitor
+Schedule: Every 15 minutes
+
+Task:
+"Check support@company.com inbox
+Find emails with subject containing 'urgent'
+Extract sender, subject, first paragraph
+Post to Slack #support-urgent channel"
+```
+
+### Sales Lead Tracker
+
+```
+Agent: Lead Tracker
+Schedule: Every hour
+
+Task:
+"Check Gmail for emails to sales@company.com
+Extract contact info and company name
+Create lead in HubSpot
+Send notification to sales team"
+```
+
+### Executive Summary
+
+```
+Agent: Executive Briefing
+Schedule: Daily at 8 AM
+
+Task:
+"Check emails from board members and executives overnight
+Summarize key items requiring attention
+Create brief in Google Docs
+Email summary to CEO"
+```
+
+## API Reference
+
+### Integration Tools
+
+When Gmail is connected, agents have access to:
+
+```javascript
+// Available tools for Gmail integration
+integration_gmail_list_messages
+integration_gmail_get_message
+integration_gmail_send_message
+integration_gmail_modify_labels
+integration_gmail_search
+```
+
+### Response Format
+
+Email data returned as:
+
+```json
+{
+  "id": "message_id",
+  "threadId": "thread_id",
+  "labelIds": ["INBOX", "UNREAD"],
+  "snippet": "Email preview text...",
+  "payload": {
+    "headers": [
+      {"name": "From", "value": "sender@example.com"},
+      {"name": "Subject", "value": "Meeting tomorrow"}
+    ],
+    "body": {
+      "data": "base64_encoded_content"
+    }
+  }
+}
+```
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Outlook" icon="envelope" href="/integrations/email/outlook">
+    Also supports Microsoft Outlook integration.
+  </Card>
+  <Card title="Slack" icon="slack" href="/integrations/communication/slack">
+    Forward email summaries to Slack.
+  </Card>
+  <Card title="Notion" icon="book" href="/integrations/productivity/notion">
+    Create tasks from emails in Notion.
+  </Card>
+  <Card title="Credentials" icon="lock" href="/user-guide/credentials">
+    Manage your Gmail credentials securely.
+  </Card>
+</CardGroup>
