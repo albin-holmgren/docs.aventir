@@ -3,11 +3,11 @@
   "theme": "mint",
   "name": "AVENTIR",
   "colors": {
-    "primary": "#3B82F6",
-    "light": "#60A5FA",
-    "dark": "#2563EB"
+    "primary": "#191919",
+    "light": "#F4F4F4",
+    "dark": "#131314"
   },
-  "favicon": "/favicon.png",
+  "favicon": "/logo-black.png",
   "navigation": {
     "tabs": [
       {
@@ -19,7 +19,9 @@
               "index",
               "quickstart",
               "installation",
-              "core-concepts"
+              "core-concepts",
+              "pricing",
+              "contact-sales"
             ]
           },
           {
@@ -85,54 +87,19 @@
             ]
           }
         ]
-      },
-      {
-        "tab": "Architecture",
-        "groups": [
-          {
-            "group": "System Design",
-            "pages": [
-              "architecture/overview",
-              "architecture/agent-executor",
-              "architecture/skills-registry",
-              "architecture/integration-runtime",
-              "architecture/memory-systems",
-              "architecture/security"
-            ]
-          }
-        ]
       }
-    ],
-    "global": {
-      "anchors": [
-        {
-          "anchor": "Web App",
-          "href": "https://app.aventir.io",
-          "icon": "globe"
-        },
-        {
-          "anchor": "Status",
-          "href": "https://status.aventir.io",
-          "icon": "activity"
-        }
-      ]
-    }
+    ]
   },
   "logo": {
     "light": "/logo-black.png",
     "dark": "/logo-white.png"
   },
   "navbar": {
-    "links": [
-      {
-        "label": "Support",
-        "href": "mailto:support@aventir.io"
-      }
-    ],
+    "links": [],
     "primary": {
       "type": "button",
       "label": "Launch App",
-      "href": "https://app.aventir.io"
+      "href": "https://aventir.ai"
     }
   },
   "footer": {
